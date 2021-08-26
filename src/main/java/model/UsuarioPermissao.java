@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  *
@@ -26,7 +27,7 @@ import javax.persistence.Table;
 @Table(name = "usuario_permissao", catalog = "mvc", schema = "")
 @NamedQueries({
     @NamedQuery(name = "UsuarioPermissao.findAll", query = "SELECT u FROM UsuarioPermissao u")})
-public class UsuarioPermissao implements Serializable {
+public class UsuarioPermissao implements GrantedAuthority, Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -95,6 +96,11 @@ public class UsuarioPermissao implements Serializable {
     @Override
     public String toString() {
         return "model.UsuarioPermissao[ idUsuarioPermissao=" + idUsuarioPermissao + " ]";
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.getIdPermissao().getDescricao();
     }
     
 }

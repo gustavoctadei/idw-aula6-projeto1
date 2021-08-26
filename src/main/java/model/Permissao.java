@@ -35,6 +35,9 @@ public class Permissao implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_permissao", nullable = false)
     private Integer idPermissao;
+    @Basic(optional = false)
+    @Column(name = "descricao", nullable = false, length = 0)
+    private String descricao;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPermissao")
     private Collection<UsuarioPermissao> usuarioPermissaoCollection;
 
@@ -45,12 +48,25 @@ public class Permissao implements Serializable {
         this.idPermissao = idPermissao;
     }
 
+    public Permissao(Integer idPermissao, String descricao) {
+        this.idPermissao = idPermissao;
+        this.descricao = descricao;
+    }
+
     public Integer getIdPermissao() {
         return idPermissao;
     }
 
     public void setIdPermissao(Integer idPermissao) {
         this.idPermissao = idPermissao;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public Collection<UsuarioPermissao> getUsuarioPermissaoCollection() {

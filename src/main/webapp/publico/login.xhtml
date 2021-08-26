@@ -6,15 +6,21 @@
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    
+
     <body>
         <h1>Login</h1>
         <hr/>
-        
+
+        <h:form prependId="false">
+            <h:inputText id="username" />
+            <h:inputSecret id="password" />
+            <h:commandButton value="Login" />
+        </h:form>
+
         <h:form>
             <h:commandButton action="#{usuarioBean.novo()}" value="Registre-se" />
         </h:form>
         <hr/>
-        
+
     </body>
 </html>

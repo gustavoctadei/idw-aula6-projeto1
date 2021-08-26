@@ -6,9 +6,10 @@
 package bean;
 
 import dao.UsuarioDao;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import model.Usuario;
 import util.FacesUtils;
@@ -20,16 +21,24 @@ import util.FacesUtils;
 
 @ManagedBean
 @Named
-@RequestScoped
+@ViewScoped
 public class UsuarioBean {
     
-    private Usuario usuario = new Usuario();
+    private Usuario usuario;
     private String confirmaSenha;
     
-    public String novo() {
+    private String login;
+    private String senha;
+    
+    @ManagedProperty("#{usuarioDao}")
+    private UsuarioDao usuarioDao;
+
+    public UsuarioBean() {
         this.usuario = new Usuario();
-        
-        return "usuario";
+    }
+    
+    public String novo() {
+        return "/publico/usuario";
     }
     
     public String salvar() {
@@ -41,7 +50,6 @@ public class UsuarioBean {
         
         this.usuario.setAtivo(true);
         
-        UsuarioDao usuarioDao = new UsuarioDao();
         usuarioDao.salvar(this.usuario);
         
         return "usuarioSucesso";
@@ -61,6 +69,30 @@ public class UsuarioBean {
 
     public void setConfirmaSenha(String confirmaSenha) {
         this.confirmaSenha = confirmaSenha;
+    }
+
+    public UsuarioDao getUsuarioDao() {
+        return usuarioDao;
+    }
+
+    public void setUsuarioDao(UsuarioDao usuarioDao) {
+        this.usuarioDao = usuarioDao;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
 }

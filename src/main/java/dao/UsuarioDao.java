@@ -6,42 +6,52 @@
 package dao;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import model.Usuario;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Gustavo
  */
-public class UsuarioDao extends GenericDao {
+
+@Repository
+@Transactional
+public class UsuarioDao {
+    
+    @PersistenceContext
+    private EntityManager em;
     
     public void salvar(Usuario usuario) {
-        savePojo(usuario);
+        em.merge(usuario);
     }
     
     public void atualizar(Usuario usuario) {
-        savePojo(usuario);
+        em.merge(usuario);
     }
     
     public void excluir(Usuario usuario) {
-        removePojo(usuario);
+        em.remove(usuario);
     }
     
     public Usuario carregar(Integer idUsuario) {
         String sql = "select u from Usuario u where u.idUsuario = ?1";
         
-        return (Usuario) getPojo(sql, idUsuario);
+        return em.createQuery(sql, Usuario.class).getSingleResult();
     }
     
     public Usuario buscarPorLogin(String login) {
         String sql = "select u from Usuario u where u.login = ?1";
         
-        return (Usuario) getPojo(sql, login);
+        return em.createQuery(sql, Usuario.class).getSingleResult();
     }
     
     public List<Usuario> listar() {
-        String sql = "select u from Usuairo u";
+        String sql = "select u from Usuario u";
         
-        return getPureList(Usuario.class, sql);
+        return em.createQuery(sql, Usuario.class).getResultList();
     }
     
 }

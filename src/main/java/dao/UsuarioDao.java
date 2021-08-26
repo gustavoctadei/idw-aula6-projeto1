@@ -24,12 +24,12 @@ public class UsuarioDao {
     @PersistenceContext
     private EntityManager em;
     
-    public void salvar(Usuario usuario) {
-        em.merge(usuario);
+    public Usuario salvar(Usuario usuario) {
+        return (Usuario) em.merge(usuario);
     }
     
-    public void atualizar(Usuario usuario) {
-        em.merge(usuario);
+    public Usuario atualizar(Usuario usuario) {
+        return (Usuario) em.merge(usuario);
     }
     
     public void excluir(Usuario usuario) {

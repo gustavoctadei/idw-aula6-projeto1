@@ -14,6 +14,22 @@ import javax.faces.context.FacesContext;
  */
 public class FacesUtils {
     
+    public static void putAtributoFlash(String chave, Object objeto) {
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(chave, objeto);
+        
+        } catch (Exception e) {}
+    }
+    
+    public static Object getAtributoFlash(String chave) {
+        try {
+            return FacesContext.getCurrentInstance().getExternalContext().getFlash().get(chave);
+            
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     public static void mensagem(String mensagem, FacesMessage.Severity severity) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, mensagem, null));
     }

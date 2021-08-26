@@ -10,17 +10,27 @@
     <body>
         <h1>Login</h1>
         <hr/>
-
+        
+        <h:panelGroup rendered="#{param.error!=null}">
+            <span style="color: red">Erro ao efetuar login.</span>
+            <br/>
+            Motivo: #{SPRING_SECURITY_LAST_EXCEPTION.message}
+        </h:panelGroup>
+        
         <h:form prependId="false">
-            <h:inputText id="username" />
-            <h:inputSecret id="password" />
-            <h:commandButton value="Login" />
-        </h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Login" for="username" />
+                <h:inputText id="username" />
 
-        <h:form>
-            <h:commandButton action="#{usuarioBean.novo()}" value="Registre-se" />
+                <h:outputLabel value="Senha" for="senha" />
+                <h:inputSecret id="password" />
+                
+                <h:outputLabel />
+                <h:commandButton value="Login" />
+            </h:panelGrid>
         </h:form>
         <hr/>
-
+        
+        <button><a href="registre-se.xhtml">Registre-se</a></button>
     </body>
 </html>

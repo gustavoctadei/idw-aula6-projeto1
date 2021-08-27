@@ -9,7 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import model.Usuario;
-import org.springframework.security.core.context.SecurityContextHolder;
+import util.SpringUtils;
 
 /**
  *
@@ -24,7 +24,7 @@ public class UsuarioBean {
     private Usuario usuarioLogado;
 
     public UsuarioBean() {
-        usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        usuarioLogado = SpringUtils.getUsuarioLogado();
     }
 
     public Usuario getUsuarioLogado() {

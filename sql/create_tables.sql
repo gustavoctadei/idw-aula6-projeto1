@@ -32,4 +32,4 @@ CREATE TABLE usuario_permissao (
     	REFERENCES permissao(id_permissao)
 );
 
-INSERT INTO permissao (descricao) VALUES ("ROLE_ADMINISTRADOR"), ("ROLE_USUARIO");
+INSERT INTO permissao (descricao) VALUES ("ROLE_ADMINISTRADOR"), ("ROLE_USUARIO"), ("ROLE_USUARIO_VIP");

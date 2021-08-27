@@ -210,7 +210,7 @@ public class Usuario implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.ativo;
     }
     
 }

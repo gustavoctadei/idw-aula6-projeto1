@@ -43,6 +43,11 @@ public class Permissao implements Serializable {
 
     public Permissao() {
     }
+    
+    public Permissao(PermissaoEnum permissaoEnum) {
+        this.idPermissao = permissaoEnum.getId();
+        this.descricao = permissaoEnum.getDescricao();
+    }
 
     public Permissao(Integer idPermissao) {
         this.idPermissao = idPermissao;

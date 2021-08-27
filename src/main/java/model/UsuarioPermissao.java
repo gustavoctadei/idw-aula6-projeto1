@@ -44,6 +44,11 @@ public class UsuarioPermissao implements GrantedAuthority, Serializable {
 
     public UsuarioPermissao() {
     }
+    
+    public UsuarioPermissao(Usuario usuario, Permissao permissao) {
+        this.idUsuario = usuario;
+        this.idPermissao = permissao;
+    }
 
     public UsuarioPermissao(Integer idUsuarioPermissao) {
         this.idUsuarioPermissao = idUsuarioPermissao;

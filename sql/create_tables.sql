@@ -13,7 +13,8 @@ CREATE TABLE usuario (
 
 CREATE TABLE permissao (
     id_permissao INT NOT NULL AUTO_INCREMENT,
-    
+    descricao VARCHAR(255) NOT NULL,
+
     PRIMARY KEY (id_permissao)
 );
 
@@ -30,3 +31,5 @@ CREATE TABLE usuario_permissao (
     FOREIGN KEY (id_permissao)
     	REFERENCES permissao(id_permissao)
 );
+
+INSERT INTO permissao (descricao) VALUES ("ROLE_ADMINISTRADOR"), ("ROLE_USUARIO");

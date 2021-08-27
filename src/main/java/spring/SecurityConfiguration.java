@@ -37,6 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/publico/**").permitAll()
+                .antMatchers("/logado/**").hasRole("USUARIO")
+                .antMatchers("/admin/**").hasRole("ADMINISTRADOR")
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/publico/login.xhtml").defaultSuccessUrl("/logado/principal.xhtml")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/publico/login.xhtml");

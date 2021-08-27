@@ -6,12 +6,16 @@
 package bean;
 
 import dao.UsuarioDao;
+import dao.UsuarioPermissaoDao;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
+import model.Permissao;
+import model.PermissaoEnum;
 import model.Usuario;
+import model.UsuarioPermissao;
 import util.FacesUtils;
 import util.MD5;
 
@@ -30,6 +34,9 @@ public class RegistreSeBean {
     
     @ManagedProperty("#{usuarioDao}")
     private UsuarioDao usuarioDao;
+    
+    @ManagedProperty("#{usuarioPermissaoDao}")
+    private UsuarioPermissaoDao usuarioPermissaoDao;
 
     public RegistreSeBean() {
         usuario = (Usuario) FacesUtils.getAtributoFlash("usuarioCadastrado");
@@ -49,8 +56,9 @@ public class RegistreSeBean {
         }
         
         this.usuario.setAtivo(true);
-        
         usuario = usuarioDao.salvar(this.usuario);
+        
+        usuarioPermissaoDao.salvar( new UsuarioPermissao(usuario, new Permissao(PermissaoEnum.USUARIO)) );
         
         FacesUtils.putAtributoFlash("usuarioCadastrado", usuario);
         return "usuarioSucesso";
@@ -78,6 +86,14 @@ public class RegistreSeBean {
 
     public void setUsuarioDao(UsuarioDao usuarioDao) {
         this.usuarioDao = usuarioDao;
+    }
+
+    public UsuarioPermissaoDao getUsuarioPermissaoDao() {
+        return usuarioPermissaoDao;
+    }
+
+    public void setUsuarioPermissaoDao(UsuarioPermissaoDao usuarioPermissaoDao) {
+        this.usuarioPermissaoDao = usuarioPermissaoDao;
     }
     
 }

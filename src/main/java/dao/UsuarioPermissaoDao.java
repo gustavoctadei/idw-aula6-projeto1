@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import model.UsuarioPermissao;
@@ -27,8 +28,10 @@ public class UsuarioPermissaoDao {
         return (UsuarioPermissao) em.merge(usuarioPermissao);
     }
     
-//    public void excluir(UsuarioPermissao usuarioPermissao) {
-//        em.remove( em.contains(usuarioPermissao)? usuarioPermissao : em.merge(usuarioPermissao) );
-//    }
+    public void salvarLista(List<UsuarioPermissao> listaUsuarioPermissao) {
+        for (UsuarioPermissao up : listaUsuarioPermissao) {
+            salvar(up);
+        }
+    }
     
 }

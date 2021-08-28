@@ -39,7 +39,7 @@ public class RegistreSeBean {
     private UsuarioPermissaoDao usuarioPermissaoDao;
 
     public RegistreSeBean() {
-        usuario = (Usuario) FacesUtils.getAtributoFlash("usuarioCadastrado");
+        usuario = (Usuario) FacesUtils.getAtributoFlash("currentUsuario");
         
         if (usuario == null) {
             usuario = new Usuario();
@@ -47,6 +47,9 @@ public class RegistreSeBean {
     }
     
     public String salvar() {
+        
+        Boolean novoUsuario = usuario.getIdUsuario() == null;
+        
         usuario.setSenha( MD5.getHashString(usuario.getSenha()) );
         confirmaSenha = MD5.getHashString(confirmaSenha);
         
@@ -60,8 +63,13 @@ public class RegistreSeBean {
         
         usuarioPermissaoDao.salvar( new UsuarioPermissao(usuario, new Permissao(PermissaoEnum.USUARIO)) );
         
-        FacesUtils.putAtributoFlash("usuarioCadastrado", usuario);
-        return "usuarioSucesso";
+        if(novoUsuario) {
+            FacesUtils.putAtributoFlash("currentUsuario", usuario);
+            return "usuarioSucesso";
+        }
+        
+        else return "/admin/principal";
+        
     }
 
     public Usuario getUsuario() {

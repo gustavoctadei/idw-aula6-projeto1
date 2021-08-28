@@ -176,6 +176,14 @@ public class Usuario implements UserDetails, Serializable {
         return "model.Usuario[ idUsuario=" + idUsuario + " ]";
     }
     
+    public boolean hasRole(String role) {
+        for (UsuarioPermissao up : this.usuarioPermissaoCollection) {
+            if (up.getIdPermissao().getDescricao().equals(role)) return true;
+        }
+        
+        return false;
+    }
+    
     //Métodos do Spring Security
 
     @Override

@@ -33,7 +33,7 @@ public class UsuarioDao {
     }
     
     public void excluir(Usuario usuario) {
-        em.remove(usuario);
+        em.remove( em.contains(usuario)? usuario : em.merge(usuario) );
     }
     
     public Usuario carregar(Integer idUsuario) {

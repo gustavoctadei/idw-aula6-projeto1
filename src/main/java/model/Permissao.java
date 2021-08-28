@@ -38,8 +38,6 @@ public class Permissao implements Serializable {
     @Basic(optional = false)
     @Column(name = "descricao", nullable = false, length = 0)
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPermissao")
-    private Collection<UsuarioPermissao> usuarioPermissaoCollection;
 
     public Permissao() {
     }
@@ -72,14 +70,6 @@ public class Permissao implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public Collection<UsuarioPermissao> getUsuarioPermissaoCollection() {
-        return usuarioPermissaoCollection;
-    }
-
-    public void setUsuarioPermissaoCollection(Collection<UsuarioPermissao> usuarioPermissaoCollection) {
-        this.usuarioPermissaoCollection = usuarioPermissaoCollection;
     }
 
     @Override

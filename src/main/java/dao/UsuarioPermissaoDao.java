@@ -27,4 +27,8 @@ public class UsuarioPermissaoDao {
         return (UsuarioPermissao) em.merge(usuarioPermissao);
     }
     
+//    public void excluir(UsuarioPermissao usuarioPermissao) {
+//        em.remove( em.contains(usuarioPermissao)? usuarioPermissao : em.merge(usuarioPermissao) );
+//    }
+    
 }

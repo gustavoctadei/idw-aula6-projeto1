@@ -5,8 +5,11 @@
  */
 package bean;
 
+import dao.UsuarioDao;
 import dao.UsuarioPermissaoDao;
 import java.util.Collection;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -15,7 +18,7 @@ import model.Permissao;
 import model.PermissaoEnum;
 import model.Usuario;
 import model.UsuarioPermissao;
-import org.springframework.security.core.context.SecurityContextHolder;
+import util.FacesUtils;
 
 /**
  *
@@ -27,21 +30,53 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @ViewScoped
 public class AdministrativoBean {
     
-    private Usuario usuarioLogado;
+    private List<Usuario> listaUsuario;
+    private Usuario currentUsuario;
+    
+    @ManagedProperty("#{usuarioDao}")
+    private UsuarioDao usuarioDao;
     
     @ManagedProperty("#{usuarioPermissaoDao}")
     private UsuarioPermissaoDao usuarioPermissaoDao;
-
-    public AdministrativoBean() {
-        usuarioLogado = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    
+    @PostConstruct
+    public void postConstruct() {
+        listaUsuario = usuarioDao.listar();
+    }
+    
+    public void ativar() {
+        currentUsuario.setAtivo(true);
+        usuarioDao.salvar(currentUsuario);
+        
+        currentUsuario = new Usuario();
+    }
+    
+    public void desativar() {
+        currentUsuario.setAtivo(false);
+        usuarioDao.salvar(currentUsuario);
+        
+        currentUsuario = new Usuario();
+    }
+    
+    public String editar() {
+        FacesUtils.putAtributoFlash("currentUsuario", currentUsuario);
+        
+        return "/publico/registre-se";
+    }
+    
+    public void excluir() {
+        usuarioDao.excluir(currentUsuario);
+        listaUsuario.remove(currentUsuario);
+        
+        currentUsuario = new Usuario();
     }
     
     public void atribuiPermissaoAdministrador() {
-        atribuiPermissao(usuarioLogado, new Permissao(PermissaoEnum.ADMINISTRADOR));
+        atribuiPermissao(currentUsuario, new Permissao(PermissaoEnum.ADMINISTRADOR));
     }
     
     public void atribuiPermissaoUsuarioVip() {
-        atribuiPermissao(usuarioLogado, new Permissao(PermissaoEnum.USUARIO_VIP));
+        atribuiPermissao(currentUsuario, new Permissao(PermissaoEnum.USUARIO_VIP));
     }
     
     private void atribuiPermissao(Usuario usuario, Permissao permissao) {
@@ -54,7 +89,11 @@ public class AdministrativoBean {
         
         UsuarioPermissao up = usuarioPermissaoDao.salvar( new UsuarioPermissao(usuario, permissao) );
         usuario.getUsuarioPermissaoCollection().add(up);
+        
+        currentUsuario = new Usuario();
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public UsuarioPermissaoDao getUsuarioPermissaoDao() {
         return usuarioPermissaoDao;
@@ -62,6 +101,30 @@ public class AdministrativoBean {
 
     public void setUsuarioPermissaoDao(UsuarioPermissaoDao usuarioPermissaoDao) {
         this.usuarioPermissaoDao = usuarioPermissaoDao;
+    }
+
+    public List<Usuario> getListaUsuario() {
+        return listaUsuario;
+    }
+
+    public void setListaUsuario(List<Usuario> listaUsuario) {
+        this.listaUsuario = listaUsuario;
+    }
+
+    public Usuario getCurrentUsuario() {
+        return currentUsuario;
+    }
+
+    public void setCurrentUsuario(Usuario currentUsuario) {
+        this.currentUsuario = currentUsuario;
+    }
+
+    public UsuarioDao getUsuarioDao() {
+        return usuarioDao;
+    }
+
+    public void setUsuarioDao(UsuarioDao usuarioDao) {
+        this.usuarioDao = usuarioDao;
     }
     
 }

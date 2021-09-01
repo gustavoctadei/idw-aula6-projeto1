@@ -34,4 +34,8 @@ public class UsuarioPermissaoDao {
         }
     }
     
+    public void excluir(UsuarioPermissao usuarioPermissao) {
+        em.remove( em.find(UsuarioPermissao.class, usuarioPermissao.getIdUsuarioPermissao()) );
+    }
+    
 }

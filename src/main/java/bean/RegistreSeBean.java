@@ -83,6 +83,8 @@ public class RegistreSeBean {
         else return "/admin/principal";
         
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public Usuario getUsuario() {
         return usuario;

@@ -22,12 +22,12 @@
                 
                 <h:column>
                     <h:commandLink action="#{administrativoBean.ativar()}" rendered="#{!usuario.ativo}">
-                        <h:outputText value="Ativar" />
+                        <h:graphicImage library="images" name="usuario_ativo_false.png" style="border: 0" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
                     
                     <h:commandLink action="#{administrativoBean.desativar()}" rendered="#{usuario.ativo}">
-                        <h:outputText value="Desativar" />
+                        <h:graphicImage library="images" name="usuario_ativo_true.png" style="border: 0" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
                 </h:column>
@@ -49,20 +49,28 @@
                 
                 <h:column>
                     <h:commandLink action="#{administrativoBean.editar()}">
-                        <h:outputText value="Editar" />
+                        <h:graphicImage library="images" name="editar16.png" style="border: 0" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
                 </h:column>
                 
                 <h:column>
                     <f:facet name="header">Permissões</f:facet>
-                    <h:commandLink action="#{administrativoBean.atribuiPermissaoAdministrador()}" title="Permissão Administrador" disabled="#{usuario.hasRole('ROLE_ADMINISTRADOR')}" >
-                        <h:outputText value="Administrador - #{usuario.hasRole('ROLE_ADMINISTRADOR')? 'Sim' : 'Não'}" />
+                    <h:commandLink action="#{administrativoBean.atribuiPermissaoAdministrador()}" title="Permissão Administrador" rendered="#{!usuario.hasRole('ROLE_ADMINISTRADOR')}" >
+                        <h:graphicImage library="images" name="ROLE_ADMINISTRADOR_false.png" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
-                    <br/>
-                    <h:commandLink action="#{administrativoBean.atribuiPermissaoUsuarioVip()}" title="Permissão Usuário VIP" disabled="#{usuario.hasRole('ROLE_USUARIO_VIP')}" >
-                        <h:outputText value="Usuário VIP - #{usuario.hasRole('ROLE_USUARIO_VIP')? 'Sim' : 'Não'}" />
+                    <h:commandLink action="#{administrativoBean.removePermissaoAdministrador()}" title="Permissão Administrador" rendered="#{usuario.hasRole('ROLE_ADMINISTRADOR')}" >
+                        <h:graphicImage library="images" name="ROLE_ADMINISTRADOR_true.png" />
+                        <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
+                    </h:commandLink>
+                    
+                    <h:commandLink action="#{administrativoBean.atribuiPermissaoUsuarioVip()}" title="Permissão Usuário VIP" rendered="#{!usuario.hasRole('ROLE_USUARIO_VIP')}" >
+                        <h:graphicImage library="images" name="ROLE_USUARIO_VIP_false.png" />
+                        <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
+                    </h:commandLink>
+                    <h:commandLink action="#{administrativoBean.removePermissaoUsuarioVip()}" title="Permissão Usuário VIP" rendered="#{usuario.hasRole('ROLE_USUARIO_VIP')}" >
+                        <h:graphicImage library="images" name="ROLE_USUARIO_VIP_true.png" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
                 </h:column>
@@ -70,7 +78,7 @@
                 <h:column>
                     <h:commandLink action="#{administrativoBean.excluir()}"
                                    onclick="if (!confirm('Confirma a exclusão do usuário #{usuario.nome}?')) return false;">
-                        <h:outputText value="Excluir Usuário" />
+                        <h:graphicImage library="images" name="excluir16.png" style="border: 0" />
                         <f:setPropertyActionListener target="#{administrativoBean.currentUsuario}" value="#{usuario}" />
                     </h:commandLink>
                 </h:column>
